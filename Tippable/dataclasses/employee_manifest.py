@@ -4,6 +4,7 @@ from Tippable.dataclasses.employee import Employee
 
 import dataclasses
 import typing
+import tabulate
 
 from decimal import localcontext, Decimal, ROUND_HALF_UP
 
@@ -55,3 +56,9 @@ class EmployeeManifest:
                 total += value
 
         return self.tips_accrued - total
+
+    def __repr__(self) -> str:
+        return tabulate.tabulate(
+            [dataclasses.astuple(element) for element in self.container],
+            headers=["Name", "ID", "Tippable Hours", "Amount Received"]
+        )

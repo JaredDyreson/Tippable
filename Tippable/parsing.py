@@ -7,13 +7,12 @@ import json
 from Tippable.constants import EMPLOYEE_MANIFEST
 from Tippable.exceptions import ParsingException
 from Tippable.dataclasses.employee import Employee
+from Tippable.dataclasses.employee_manifest import EmployeeManifest
 
 
 class InputParser:
     """Class to take in JSON data and return an employee manifest"""
-    def __init__(self, path: pathlib.Path):
-        if not path.is_file():
-            raise FileNotFoundError(f"Cannot load file at: {path}")
+    def __init__(self):
 
         self.employees: typing.List[Employee] = []
         with open(EMPLOYEE_MANIFEST, "r", encoding="utf-8") as fil_ptr:
@@ -31,3 +30,4 @@ class InputParser:
                         raise ParsingException(
                             f"Parsing error for content: {content[id_]}"
                         )
+        self.employee_manifest_ = EmployeeManifest(self.employees)
