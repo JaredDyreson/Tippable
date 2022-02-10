@@ -12,6 +12,7 @@ from Tippable.dataclasses.employee_manifest import EmployeeManifest
 
 class InputParser:
     """Class to take in JSON data and return an employee manifest"""
+
     def __init__(self):
 
         self.employees: typing.List[Employee] = []

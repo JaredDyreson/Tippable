@@ -60,5 +60,5 @@ class EmployeeManifest:
     def __repr__(self) -> str:
         return tabulate.tabulate(
             [dataclasses.astuple(element) for element in self.container],
-            headers=["Name", "ID", "Tippable Hours", "Amount Received"]
+            headers=["Name", "ID", "Tippable Hours", "Amount Received"],
         )
