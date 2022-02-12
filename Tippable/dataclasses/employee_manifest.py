@@ -5,6 +5,8 @@ from Tippable.dataclasses.employee import Employee
 import dataclasses
 import typing
 import tabulate
+import pathlib
+import json
 
 from decimal import localcontext, Decimal, ROUND_HALF_UP
 
@@ -57,8 +59,19 @@ class EmployeeManifest:
 
         return self.tips_accrued - total
 
+    def __post_init__(self):
+        self.container = sorted(self.container, key=lambda x: x.name)
+
     def __repr__(self) -> str:
         return tabulate.tabulate(
             [dataclasses.astuple(element) for element in self.container],
             headers=["Name", "ID", "Tippable Hours", "Amount Received"],
         )
+    def dump(self, path: pathlib.Path) -> None:
+        """Write the current context to file"""
+
+        with open(path, "w", encoding="utf-8") as fil_ptr:
+            contents: typing.Dict[str, Employee] = {}
+            for employee in self.container:
+                contents |= dataclasses.asdict(employee)
+            fil_ptr.write(json.dumps(contents))

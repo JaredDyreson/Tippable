@@ -12,5 +12,6 @@ class Employee:
     tippable_hours: float = 0.0
     amount_received: int = 0
 
-    def __hash__(self):
-        return hash(self.id_)
+    def __post_init__(self):
+        first, last = self.name.split(" ")
+        self.name = f'{last}, {first}'
